@@ -10,10 +10,10 @@ import com.mona.nasa_pictures.Model.PictureDetails
 import com.mona.nasa_pictures.R
 import com.squareup.picasso.Picasso
 
-class PicturesAdapter(private var dataSource: List<PictureDetails>) :
+class PicturesAdapter(var dataSource: List<PictureDetails>) :
     RecyclerView.Adapter<PicturesAdapter.ViewHolder>() {
 
-    var onCamClick: ((Int) -> Unit)? = null
+    var onImageClick: ((Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -21,7 +21,7 @@ class PicturesAdapter(private var dataSource: List<PictureDetails>) :
         val holder = ViewHolder(view)
 
         holder.imageView.setOnClickListener {
-            onCamClick?.invoke(holder.bindingAdapterPosition)
+            onImageClick?.invoke(holder.bindingAdapterPosition)
         }
         return holder
     }
