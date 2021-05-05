@@ -16,6 +16,7 @@ class PictureDetailsActivity : AppCompatActivity() {
 
         Toast.makeText(this, "You can swipe left or right", Toast.LENGTH_LONG).show()
         val pictureList = intent.getSerializableExtra(INTENT_PICTURE_LIST) as ArrayList<PictureDetails>
+
         val viewPagerAdapter = ViewPagerAdapter(this@PictureDetailsActivity, pictureList)
         viewPager.adapter = viewPagerAdapter
         viewPager.currentItem = intent.getIntExtra(INTENT_CURRENT_POSITION, 0)

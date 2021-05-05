@@ -4,6 +4,8 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.mona.nasa_pictures.Model.PictureDetails
@@ -12,6 +14,7 @@ import com.squareup.picasso.Picasso
 
 class PicturesAdapter(var dataSource: List<PictureDetails>) :
     RecyclerView.Adapter<PicturesAdapter.ViewHolder>() {
+    var likedImages: ArrayList<PictureDetails> = ArrayList()
 
     var onImageClick: ((Int) -> Unit)? = null
 
@@ -23,6 +26,7 @@ class PicturesAdapter(var dataSource: List<PictureDetails>) :
         holder.imageView.setOnClickListener {
             onImageClick?.invoke(holder.bindingAdapterPosition)
         }
+
         return holder
     }
 
@@ -37,12 +41,31 @@ class PicturesAdapter(var dataSource: List<PictureDetails>) :
             Picasso.get().load(dataSource[position].url).placeholder(R.drawable.product_placeholder)
                 .error(R.drawable.product_placeholder).into(holder.imageView)
         }
+
+        holder.buttonLike.setOnCheckedChangeListener(object :
+            CompoundButton.OnCheckedChangeListener {
+            override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
+                if (holder.buttonLike.isSelected) {
+                    if (!likedImages.contains(dataSource[position])) {
+                        likedImages.add(dataSource[position])
+                    } else {
+
+                    }
+                } else {
+                    if (likedImages.contains(dataSource[position])) {
+                        likedImages.remove(dataSource[position])
+                    }
+                }
+            }
+
+        })
     }
 
     inner class ViewHolder internal constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.title)
         val imageView: ImageView = itemView.findViewById(R.id.image)
+        val buttonLike: CheckBox = itemView.findViewById(R.id.buttonLike)
     }
 }
 
